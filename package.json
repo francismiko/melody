@@ -1,0 +1,4 @@
+{
+  "name": "melody",
+  "devDependencies": { "@biomejs/biome": "1.8.3" }
+}
