@@ -4,7 +4,11 @@
   "workspaces": [
     "apps/*"
   ],
+  "scripts": {
+    "dev": "concurrently --kill-others \"cd apps/web && bun run dev\" \"cd apps/api && bun run dev\""
+  },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.3"
+    "@biomejs/biome": "^1.8.3",
+    "concurrently": "^9.0.0"
   }
 }
