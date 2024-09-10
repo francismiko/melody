@@ -5,7 +5,7 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "concurrently --kill-others \"cd apps/web && bun run dev\" \"cd apps/api && bun run dev\""
+    "dev": "concurrently --kill-others \"clear && cd apps/web && bun run dev\" \"cd apps/api && bun run dev\""
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
