@@ -1,11 +1,12 @@
+import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 
-import "virtual:uno.css";
-import "@unocss/reset/sanitize/sanitize.css";
+import "@/styles/global.css";
 import "@unocss/reset/sanitize/assets.css";
+import "@unocss/reset/sanitize/sanitize.css";
+import "virtual:uno.css";
 
 const router = createRouter({ routeTree });
 
