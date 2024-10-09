@@ -1,2 +1,2 @@
-export * from "./DynamicIsland";
-export * from "./TanStackRouterDevtools";
+export * from "./dynamic-island";
+export * from "./tanstack-router-devtools";

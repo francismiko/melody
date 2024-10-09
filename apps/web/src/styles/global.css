@@ -4,7 +4,7 @@
   --primary-text: #0e0e0e;
 
   &.dark {
-    --background: #0e0f0e;
+    --background: #050719;
     --primary: #0044ff;
     --primary-text: #ffffff;
   }

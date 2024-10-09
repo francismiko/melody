@@ -4,7 +4,7 @@ import { createRootRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createRootRoute({
 	component: () => (
-		<ThemeProvider defaultTheme="dark">
+		<ThemeProvider defaultTheme="light">
 			<Outlet />
 			<DynamicIsland />
 			<TanStackRouterDevtools />
