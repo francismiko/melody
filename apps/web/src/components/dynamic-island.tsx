@@ -6,14 +6,14 @@ export const DynamicIsland: FC = () => {
 	const [hoverRef, isHovered] = useHover();
 
 	return (
-		<div className="flex w-full fixed justify-center top-8 z-99999">
+		<div className="flex w-full fixed justify-center top-4 z-99999">
 			<motion.div
 				ref={hoverRef}
 				initial={{ width: "10rem", height: "2.4rem" }}
-				whileHover={{ width: "36rem", height: "3rem" }}
+				whileHover={{ width: "36rem", height: "3.2rem" }}
 				whileTap={{ scale: 1.2 }}
 				transition={{ duration: 0.4 }}
-				className="flex relative bg-black rounded-full before:absolute before:content-[''] before:inset-0 hover:before:-inset-16"
+				className="flex relative bg-black rounded-full before:absolute before:content-[''] before:-inset-0 hover:before:-inset-16"
 			>
 				<AnimatePresence>
 					{isHovered ? (
@@ -31,31 +31,43 @@ const ActivedBar: FC = () => {
 	return (
 		<div className="flex absolute w-full h-full place-content-between">
 			<motion.div
-				initial={{ opacity: 0, x: 100 }}
-				exit={{ opacity: 0, x: 100 }}
-				animate={{ opacity: 1, x: 0 }}
+				initial={{ opacity: 0, scale: 0.4, x: -200 }}
+				exit={{ opacity: 0, scale: 0.4, x: -100 }}
+				animate={{ opacity: 1, scale: 1, x: 0 }}
 				transition={{ duration: 0.4 }}
-				className="text-white flex flex-1 flex-row items-center"
+				className="text-red flex flex-1 flex-row items-center gap-4"
 			>
-				<div>LOGO</div>
+				{[...Array(2)].map((_, i) => (
+					<div key={i} className="w-8">
+						选项
+					</div>
+				))}
 			</motion.div>
 			<motion.div
-				initial={{ opacity: 0, y: -40 }}
-				exit={{ opacity: 0, y: 40 }}
-				animate={{ opacity: 1, y: 0 }}
+				initial={{ opacity: 0, scale: 1, y: -50 }}
+				exit={{ opacity: 0, scale: 1, y: 50 }}
+				animate={{ opacity: 1, scale: 1, y: 0 }}
 				transition={{ duration: 0.4 }}
-				className="text-white flex flex-1 justify-center items-center"
+				className="text-red flex flex-1 justify-center items-center gap-4"
 			>
-				<div>选项</div>
+				{[...Array(3)].map((_, i) => (
+					<div key={i} className="w-8">
+						选项
+					</div>
+				))}
 			</motion.div>
 			<motion.div
-				initial={{ opacity: 0, y: -40 }}
-				exit={{ opacity: 0, y: 40 }}
-				animate={{ opacity: 1, y: 0 }}
+				initial={{ opacity: 0, scale: 0.4, x: 200 }}
+				exit={{ opacity: 0, scale: 0.4, x: 100 }}
+				animate={{ opacity: 1, scale: 1, x: 0 }}
 				transition={{ duration: 0.4 }}
-				className="text-white flex flex-1 flex-row-reverse items-center"
+				className="text-red flex flex-1 flex-row-reverse items-center gap-4"
 			>
-				<div>设置</div>
+				{[...Array(2)].map((_, i) => (
+					<div key={i} className="w-8">
+						选项
+					</div>
+				))}
 			</motion.div>
 		</div>
 	);
@@ -64,13 +76,13 @@ const ActivedBar: FC = () => {
 const InactivedBar: FC = () => {
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: -40 }}
-			exit={{ opacity: 0, y: 40 }}
+			initial={{ opacity: 0, y: -50 }}
+			exit={{ opacity: 0, y: 50 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.4 }}
 			className="flex absolute w-full h-full"
 		>
-			<div className="text-white flex flex-1 justify-center items-center transition-all">
+			<div className="text-red flex flex-1 justify-center items-center transition-all">
 				<div>信息展示</div>
 			</div>
 		</motion.div>
