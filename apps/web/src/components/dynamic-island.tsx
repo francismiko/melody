@@ -1,6 +1,8 @@
 import { useHover } from "@uidotdev/usehooks";
 import { AnimatePresence, motion } from "framer-motion";
 import type { FC } from "react";
+import { FaGithub, FaMoon, FaXTwitter } from "react-icons/fa6";
+import { LuLanguages } from "react-icons/lu";
 
 const _duration_ = 0.5;
 
@@ -12,8 +14,8 @@ export const DynamicIsland: FC = () => {
 			<motion.div
 				ref={hoverRef}
 				initial={{ width: "10rem", height: "2.4rem" }}
-				whileHover={{ width: "36rem", height: "3.2rem" }}
-				whileTap={{ scale: 1.2 }}
+				whileHover={{ width: "40rem", height: "3.2rem" }}
+				whileTap={{ scale: 1.1 }}
 				transition={{ duration: _duration_ }}
 				className="flex relative overflow-hidden bg-black rounded-full before:absolute before:content-[''] before:-inset-0 hover:before:-inset-16"
 			>
@@ -34,12 +36,12 @@ const ActivedBar: FC = () => {
 		initial: {
 			opacity: 0,
 			scale: 0.4,
-			x: (direction === "left" ? -1 : 1) * 200,
+			x: (direction === "left" ? -1 : 1) * 300,
 		},
 		exit: {
 			opacity: 0,
 			scale: 0.4,
-			x: (direction === "left" ? -1 : 1) * 100,
+			x: (direction === "left" ? -1 : 1) * 200,
 		},
 		animate: { opacity: 1, scale: 1, x: 0 },
 		transition: { duration: _duration_ },
@@ -51,38 +53,37 @@ const ActivedBar: FC = () => {
 		animate: { opacity: 1, scale: 1, y: 0 },
 		transition: { duration: _duration_ },
 	};
-	const LeftBar: FC = () => (
-		<motion.div
-			{...sideBarAnimation("left")}
-			className="text-white flex flex-1 flex-row items-center gap-4"
-		>
-			{[...Array(2)].map((_, i) => (
-				<div key={i} className="w-8">
-					选项
-				</div>
-			))}
-		</motion.div>
-	);
+	const LeftBar: FC = () => {
+		return (
+			<motion.div
+				{...sideBarAnimation("left")}
+				className="text-white flex w-1/3 flex-row items-center gap-4 pl-4"
+			>
+				{[...Array(1)].map((_, i) => (
+					<div key={i}>Francis's melody</div>
+				))}
+			</motion.div>
+		);
+	};
 
 	const RightBar: FC = () => (
 		<motion.div
 			{...sideBarAnimation("right")}
-			className="text-white flex flex-1 flex-row-reverse items-center gap-4"
+			className="text-white flex w-1/3 flex-row-reverse items-center gap-4 pr-4 text-lg"
 		>
-			{[...Array(2)].map((_, i) => (
-				<div key={i} className="w-8">
-					选项
-				</div>
-			))}
+			<FaMoon />
+			<LuLanguages />
+			<FaGithub />
+			<FaXTwitter />
 		</motion.div>
 	);
 
 	const MiddleBar: FC = () => (
 		<motion.div
 			{...middleBarAnimation}
-			className="text-white flex flex-1 justify-center items-center gap-4"
+			className="text-white flex grow w-1/3 justify-center items-center gap-4"
 		>
-			{[...Array(3)].map((_, i) => (
+			{[...Array(4)].map((_, i) => (
 				<div key={i} className="w-8">
 					选项
 				</div>
