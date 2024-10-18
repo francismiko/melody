@@ -4,10 +4,58 @@ import type { FC } from "react";
 import { FaGithub, FaMoon, FaXTwitter } from "react-icons/fa6";
 import { LuLanguages } from "react-icons/lu";
 
+type NavBarItemsType = any;
+
+type InfoBarItemsType = any;
+
 const _duration_ = 0.5;
 
 export const DynamicIsland: FC = () => {
 	const [hoverRef, isHovered] = useHover();
+
+	const navBarItems: NavBarItemsType = {
+		left: [
+			{
+				key: "a",
+				lable: "Francis's melody",
+			},
+		],
+		right: [
+			{
+				key: "a",
+				lable: "aaa",
+			},
+			{
+				key: "b",
+				lable: "bbb",
+			},
+		],
+		middle: [
+			{
+				key: "a",
+				lable: "主页",
+			},
+			{
+				key: "b",
+				lable: "博客",
+			},
+			{
+				key: "b",
+				lable: "项目",
+			},
+			{
+				key: "b",
+				lable: "赞助",
+			},
+		],
+	};
+
+	const infoBarItems: InfoBarItemsType = [
+		{
+			key: "aa",
+			lable: "aaa",
+		},
+	];
 
 	return (
 		<div className="flex w-full fixed justify-center top-4 z-99999">
@@ -21,9 +69,9 @@ export const DynamicIsland: FC = () => {
 			>
 				<AnimatePresence>
 					{isHovered ? (
-						<ActivedBar key="active" />
+						<NavBar key="navigation" items={navBarItems} />
 					) : (
-						<InactivedBar key="inactive" />
+						<InfoBar key="information" items={infoBarItems} />
 					)}
 				</AnimatePresence>
 			</motion.div>
@@ -31,7 +79,7 @@ export const DynamicIsland: FC = () => {
 	);
 };
 
-const ActivedBar: FC = () => {
+const NavBar: FC<{ items: NavBarItemsType }> = ({ items }) => {
 	const sideBarAnimation = (direction: "left" | "right") => ({
 		initial: {
 			opacity: 0,
@@ -60,8 +108,8 @@ const ActivedBar: FC = () => {
 				{...sideBarAnimation("left")}
 				className="text-white flex w-1/4 flex-row items-center gap-4 pl-4 text-nowrap"
 			>
-				{[...Array(1)].map((_, i) => (
-					<span key={i}>Francis's melody</span>
+				{items.left.map((item) => (
+					<span key={item.key}>{item.lable}</span>
 				))}
 			</motion.div>
 		);
@@ -84,9 +132,9 @@ const ActivedBar: FC = () => {
 			{...middleBarAnimation}
 			className="text-white absolute flex grow w-full h-full px-1/4 justify-center items-center gap-4 text-nowrap"
 		>
-			{[...Array(5)].map((_, i) => (
-				<span key={i} className="min-w-8">
-					选项
+			{items.middle.map((item) => (
+				<span key={item.key} className="min-w-8">
+					{item.lable}
 				</span>
 			))}
 		</motion.div>
@@ -101,7 +149,7 @@ const ActivedBar: FC = () => {
 	);
 };
 
-const InactivedBar: FC = () => {
+const InfoBar: FC<{ items: InfoBarItemsType }> = ({ items }) => {
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: -50 }}
