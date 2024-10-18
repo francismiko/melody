@@ -16,8 +16,8 @@ export const DynamicIsland: FC = () => {
 				initial={{ width: "10rem", height: "2.4rem" }}
 				whileHover={{ width: "40rem", height: "3.2rem" }}
 				whileTap={{ scale: 1.1 }}
-				transition={{ duration: _duration_ }}
-				className="flex relative overflow-hidden bg-black rounded-full before:absolute before:content-[''] before:-inset-0 hover:before:-inset-16"
+				transition={{ duration: _duration_, ease: "easeOut" }}
+				className="flex relative overflow-hidden bg-black select-none rounded-full before:absolute before:content-[''] before:-inset-0 hover:before:-inset-16"
 			>
 				<AnimatePresence>
 					{isHovered ? (
@@ -44,23 +44,24 @@ const ActivedBar: FC = () => {
 			x: (direction === "left" ? -1 : 1) * 200,
 		},
 		animate: { opacity: 1, scale: 1, x: 0 },
-		transition: { duration: _duration_ },
+		transition: { duration: _duration_, ease: "easeOut" },
 	});
 
 	const middleBarAnimation = {
 		initial: { opacity: 0, scale: 1, y: -50 },
 		exit: { opacity: 0, scale: 1, y: 50 },
 		animate: { opacity: 1, scale: 1, y: 0 },
-		transition: { duration: _duration_ },
+		transition: { duration: _duration_, ease: "easeOut" },
 	};
+
 	const LeftBar: FC = () => {
 		return (
 			<motion.div
 				{...sideBarAnimation("left")}
-				className="text-white flex w-1/3 flex-row items-center gap-4 pl-4"
+				className="text-white flex w-1/4 flex-row items-center gap-4 pl-4 text-nowrap"
 			>
 				{[...Array(1)].map((_, i) => (
-					<div key={i}>Francis's melody</div>
+					<span key={i}>Francis's melody</span>
 				))}
 			</motion.div>
 		);
@@ -69,7 +70,7 @@ const ActivedBar: FC = () => {
 	const RightBar: FC = () => (
 		<motion.div
 			{...sideBarAnimation("right")}
-			className="text-white flex w-1/3 flex-row-reverse items-center gap-4 pr-4 text-lg"
+			className="text-white flex w-1/4 flex-row-reverse items-center gap-4 pr-4 text-lg text-nowrap"
 		>
 			<FaMoon />
 			<LuLanguages />
@@ -81,12 +82,12 @@ const ActivedBar: FC = () => {
 	const MiddleBar: FC = () => (
 		<motion.div
 			{...middleBarAnimation}
-			className="text-white flex grow w-1/3 justify-center items-center gap-4"
+			className="text-white absolute flex grow w-full h-full px-1/4 justify-center items-center gap-4 text-nowrap"
 		>
-			{[...Array(4)].map((_, i) => (
-				<div key={i} className="w-8">
+			{[...Array(5)].map((_, i) => (
+				<span key={i} className="min-w-8">
 					选项
-				</div>
+				</span>
 			))}
 		</motion.div>
 	);
@@ -110,7 +111,7 @@ const InactivedBar: FC = () => {
 			className="flex absolute w-full h-full"
 		>
 			<div className="text-white flex flex-1 justify-center items-center">
-				<div>信息展示</div>
+				<span>信息展示</span>
 			</div>
 		</motion.div>
 	);
