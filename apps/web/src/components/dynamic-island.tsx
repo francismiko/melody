@@ -12,7 +12,10 @@ type NavBarItemsType = {
 	}[];
 };
 
-type InfoBarItemsType = any;
+type InfoBarItemsType = {
+	key: string;
+	label?: string;
+}[];
 
 const _duration_ = 0.5;
 
@@ -68,17 +71,15 @@ export const DynamicIsland: FC = () => {
 	);
 
 	const infoBarItems: InfoBarItemsType = useMemo(
-		() => [{ key: "aa", label: "aaa" }],
+		() => [{ key: "info", label: "info" }],
 		[],
 	);
 
 	return (
 		<div className="flex w-full fixed justify-center top-4 z-99999">
 			<div
-				onClick={() => setT(!t)}
-				onKeyUp={() => setT(!t)}
 				ref={hoverRef}
-				className="before:absolute before:inset-0 hover:before:-inset-4 before:content-['']"
+				className="before:absolute before:-inset-0 hover:before:-inset-4 before:content-['']"
 			>
 				<motion.div
 					animate={{
@@ -178,11 +179,11 @@ const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
 			exit={{ opacity: 0, y: 50 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: _duration_ }}
-			className="flex absolute w-full h-full"
+			className="flex absolute w-full h-full text-white flex-1 justify-center items-center"
 		>
-			<div className="text-white flex flex-1 justify-center items-center">
-				<span>信息展示</span>
-			</div>
+			{items.map((item) => (
+				<span key={item.key}>{item.label}</span>
+			))}
 		</motion.div>
 	);
 });
