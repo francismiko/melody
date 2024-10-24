@@ -1,10 +1,17 @@
 import { useHover } from "@uidotdev/usehooks";
 import { AnimatePresence, motion } from "framer-motion";
-import type { FC } from "react";
+import { memo, useMemo, useState, type FC } from "react";
 import { FaGithub, FaMoon, FaXTwitter } from "react-icons/fa6";
 import { LuLanguages } from "react-icons/lu";
 
-type NavBarItemsType = any;
+// 使用映射类型来创建 NavBarItemsType
+type NavBarItemsType = {
+	[K in "left" | "right" | "middle"]: {
+		key: string;
+		label?: string;
+		icon?: JSX.Element;
+	}[];
+};
 
 type InfoBarItemsType = any;
 
@@ -12,54 +19,66 @@ const _duration_ = 0.5;
 
 export const DynamicIsland: FC = () => {
 	const [hoverRef, isHovered] = useHover();
+	const [t, setT] = useState(false);
 
-	const navBarItems: NavBarItemsType = {
-		left: [
-			{
-				key: "a",
-				lable: "Francis's melody",
-			},
-		],
-		right: [
-			{
-				key: "a",
-				lable: "aaa",
-			},
-			{
-				key: "b",
-				lable: "bbb",
-			},
-		],
-		middle: [
-			{
-				key: "a",
-				lable: "主页",
-			},
-			{
-				key: "b",
-				lable: "博客",
-			},
-			{
-				key: "b",
-				lable: "项目",
-			},
-			{
-				key: "b",
-				lable: "赞助",
-			},
-		],
-	};
+	const navBarItems: NavBarItemsType = useMemo(
+		() => ({
+			left: [
+				{
+					key: "logo",
+					label: "Francis's melody",
+				},
+			],
+			right: [
+				{
+					key: "theme",
+					icon: <FaMoon />,
+				},
+				{
+					key: "language",
+					icon: <LuLanguages />,
+				},
+				{
+					key: "github",
+					icon: <FaGithub />,
+				},
+				{
+					key: "twitter",
+					icon: <FaXTwitter />,
+				},
+			],
+			middle: [
+				{
+					key: "home",
+					label: "主页",
+				},
+				{
+					key: "blog",
+					label: "博客",
+				},
+				{
+					key: "project",
+					label: "项目",
+				},
+				{
+					key: "sponsor",
+					label: "赞助",
+				},
+			],
+		}),
+		[],
+	);
 
-	const infoBarItems: InfoBarItemsType = [
-		{
-			key: "aa",
-			lable: "aaa",
-		},
-	];
+	const infoBarItems: InfoBarItemsType = useMemo(
+		() => [{ key: "aa", label: "aaa" }],
+		[],
+	);
 
 	return (
 		<div className="flex w-full fixed justify-center top-4 z-99999">
 			<div
+				onClick={() => setT(!t)}
+				onKeyUp={() => setT(!t)}
 				ref={hoverRef}
 				className="before:absolute before:inset-0 hover:before:-inset-4 before:content-['']"
 			>
@@ -85,7 +104,7 @@ export const DynamicIsland: FC = () => {
 	);
 };
 
-const NavBar: FC<{ items: NavBarItemsType }> = ({ items }) => {
+const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 	const sideBarAnimation = (direction: "left" | "right") => ({
 		initial: {
 			opacity: 0,
@@ -115,7 +134,7 @@ const NavBar: FC<{ items: NavBarItemsType }> = ({ items }) => {
 				className="text-white flex w-1/4 flex-row items-center gap-4 pl-4 text-nowrap"
 			>
 				{items.left.map((item) => (
-					<span key={item.key}>{item.lable}</span>
+					<span key={item.key}>{item.label}</span>
 				))}
 			</motion.div>
 		);
@@ -126,10 +145,9 @@ const NavBar: FC<{ items: NavBarItemsType }> = ({ items }) => {
 			{...sideBarAnimation("right")}
 			className="text-white flex w-1/4 flex-row-reverse items-center gap-4 pr-4 text-lg text-nowrap"
 		>
-			<FaMoon />
-			<LuLanguages />
-			<FaGithub />
-			<FaXTwitter />
+			{items.right.map((item) => (
+				<span key={item.key}>{item.icon}</span>
+			))}
 		</motion.div>
 	);
 
@@ -140,7 +158,7 @@ const NavBar: FC<{ items: NavBarItemsType }> = ({ items }) => {
 		>
 			{items.middle.map((item) => (
 				<span key={item.key} className="min-w-8">
-					{item.lable}
+					{item.label}
 				</span>
 			))}
 		</motion.div>
@@ -153,9 +171,9 @@ const NavBar: FC<{ items: NavBarItemsType }> = ({ items }) => {
 			<RightBar />
 		</div>
 	);
-};
+});
 
-const InfoBar: FC<{ items: InfoBarItemsType }> = ({ items }) => {
+const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: -50 }}
@@ -169,4 +187,4 @@ const InfoBar: FC<{ items: InfoBarItemsType }> = ({ items }) => {
 			</div>
 		</motion.div>
 	);
-};
+});
