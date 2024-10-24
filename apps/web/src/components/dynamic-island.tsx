@@ -1,10 +1,9 @@
 import { useHover } from "@uidotdev/usehooks";
 import { AnimatePresence, motion } from "framer-motion";
-import { memo, useMemo, useState, type FC } from "react";
+import { memo, useMemo, type FC } from "react";
 import { FaGithub, FaMoon, FaXTwitter } from "react-icons/fa6";
 import { LuLanguages } from "react-icons/lu";
 
-// 使用映射类型来创建 NavBarItemsType
 type NavBarItemsType = {
 	[K in "left" | "right" | "middle"]: {
 		key: string;
@@ -19,7 +18,6 @@ const _duration_ = 0.5;
 
 export const DynamicIsland: FC = () => {
 	const [hoverRef, isHovered] = useHover();
-	const [t, setT] = useState(false);
 
 	const navBarItems: NavBarItemsType = useMemo(
 		() => ({
