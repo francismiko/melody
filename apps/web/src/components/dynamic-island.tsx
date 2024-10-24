@@ -59,22 +59,28 @@ export const DynamicIsland: FC = () => {
 
 	return (
 		<div className="flex w-full fixed justify-center top-4 z-99999">
-			<motion.div
+			<div
 				ref={hoverRef}
-				initial={{ width: "10rem", height: "2.4rem" }}
-				whileHover={{ width: "40rem", height: "3.2rem" }}
-				whileTap={{ scale: 1.1 }}
-				transition={{ duration: _duration_, ease: "easeOut" }}
-				className="flex relative overflow-hidden bg-black select-none rounded-full before:absolute before:content-[''] before:-inset-0 hover:before:-inset-16"
+				className="before:absolute before:inset-0 hover:before:-inset-4 before:content-['']"
 			>
-				<AnimatePresence>
-					{isHovered ? (
-						<NavBar key="navigation" items={navBarItems} />
-					) : (
-						<InfoBar key="information" items={infoBarItems} />
-					)}
-				</AnimatePresence>
-			</motion.div>
+				<motion.div
+					animate={{
+						width: isHovered ? "40rem" : "10rem",
+						height: isHovered ? "3.2rem" : "2.4rem",
+					}}
+					whileTap={{ scale: 1.1 }}
+					transition={{ duration: _duration_, ease: "easeOut" }}
+					className="flex relative overflow-hidden bg-black select-none rounded-full "
+				>
+					<AnimatePresence>
+						{isHovered ? (
+							<NavBar key="navigation" items={navBarItems} />
+						) : (
+							<InfoBar key="information" items={infoBarItems} />
+						)}
+					</AnimatePresence>
+				</motion.div>
+			</div>
 		</div>
 	);
 };
