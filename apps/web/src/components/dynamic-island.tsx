@@ -1,7 +1,7 @@
 import { useTheme } from "@/providers";
-import { useHover } from "@uidotdev/usehooks";
+import { useHover, useIsFirstRender } from "@uidotdev/usehooks";
 import { AnimatePresence, motion } from "framer-motion";
-import { memo, useEffect, useMemo, useState, type FC } from "react";
+import { memo, useMemo, type FC } from "react";
 import type { IconType } from "react-icons";
 import { FaGithub, FaMoon, FaSun, FaXTwitter } from "react-icons/fa6";
 import { LuLanguages } from "react-icons/lu";
@@ -119,16 +119,16 @@ export const DynamicIsland: FC = () => {
 };
 
 const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
-	const [isInit, setIsInit] = useState(false);
+	const isFirstRender = useIsFirstRender();
 
 	const sideBarAnimation = (direction: "left" | "right") => ({
-		initial: isInit
-			? false
-			: {
+		initial: isFirstRender
+			? {
 					opacity: 0,
 					scale: 0.4,
 					x: (direction === "left" ? -1 : 1) * 300,
-				},
+				}
+			: false,
 		exit: {
 			opacity: 0,
 			scale: 0.4,
@@ -139,18 +139,11 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 	});
 
 	const middleBarAnimation = {
-		initial: isInit ? false : { opacity: 0, scale: 1, y: -50 },
+		initial: isFirstRender ? { opacity: 0, scale: 1, y: -50 } : false,
 		exit: { opacity: 0, scale: 1, y: 50 },
 		animate: { opacity: 1, scale: 1, y: 0 },
 		transition: { duration: _duration_, ease: "easeOut" },
 	};
-
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setIsInit(true);
-		}, _duration_ * 1000);
-		return () => clearTimeout(timer);
-	}, []);
 
 	const LeftBar: FC = memo(() => (
 		<motion.div
