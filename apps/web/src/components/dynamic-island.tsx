@@ -102,8 +102,8 @@ export const DynamicIsland: FC = () => {
 						width: isHovered ? "40rem" : "10rem",
 						height: isHovered ? "3.2rem" : "2.4rem",
 					}}
-					transition={{ duration: _duration_, ease: "easeOut" }}
-					className="flex relative overflow-hidden bg-black select-none rounded-full "
+					transition={{ duration: _duration_, ease: "easeInOut" }}
+					className="flex relative overflow-hidden bg-black select-none rounded-full"
 				>
 					<AnimatePresence>
 						{isHovered ? (
@@ -121,33 +121,33 @@ export const DynamicIsland: FC = () => {
 const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 	const isFirstRender = useIsFirstRender();
 
-	const sideBarAnimation = (direction: "left" | "right") => ({
+	const sideBarAnimation = {
 		initial: isFirstRender
 			? {
 					opacity: 0,
 					scale: 0.4,
-					x: (direction === "left" ? -1 : 1) * 300,
+					filter: "blur(20px)",
 				}
 			: false,
 		exit: {
 			opacity: 0,
 			scale: 0.4,
-			x: (direction === "left" ? -1 : 1) * 200,
+			filter: "blur(20px)",
 		},
-		animate: { opacity: 1, scale: 1, x: 0 },
-		transition: { duration: _duration_, ease: "easeOut" },
-	});
+		animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
+		transition: { duration: _duration_, ease: "easeInOut" },
+	};
 
 	const middleBarAnimation = {
 		initial: isFirstRender ? { opacity: 0, scale: 1, y: -50 } : false,
 		exit: { opacity: 0, scale: 1, y: 50 },
 		animate: { opacity: 1, scale: 1, y: 0 },
-		transition: { duration: _duration_, ease: "easeOut" },
+		transition: { duration: _duration_, ease: "easeInOut" },
 	};
 
 	const LeftBar: FC = memo(() => (
 		<motion.div
-			{...sideBarAnimation("left")}
+			{...sideBarAnimation}
 			className="text-white flex w-1/4 flex-row items-center gap-4 pl-4 text-nowrap"
 		>
 			{items.left.map((item) => (
@@ -158,7 +158,7 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 
 	const RightBar: FC = memo(() => (
 		<motion.div
-			{...sideBarAnimation("right")}
+			{...sideBarAnimation}
 			className="text-white flex w-1/4 flex-row-reverse items-center gap-2 pr-4 text-lg text-nowrap"
 		>
 			{items.right.map((item) => (
@@ -199,7 +199,7 @@ const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
 			initial={{ opacity: 0, y: -50 }}
 			exit={{ opacity: 0, y: 50 }}
 			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: _duration_ }}
+			transition={{ duration: _duration_, ease: "easeInOut" }}
 			className="flex absolute w-full h-full text-white flex-1 justify-center items-center"
 		>
 			{items.map((item) => (
