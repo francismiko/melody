@@ -1,16 +1,23 @@
 :root {
   --background: #ffffff;
-  --primary: #0055ff;
+  --primary: #00ffcc;
   --primary-text: #0e0e0e;
+  --background-point:#050719;
 
   &.dark {
     --background: #050719;
-    --primary: #0044ff;
+    --primary: #00ffcc;
     --primary-text: #ffffff;
+    --background-point:#666666;
   }
 }
 
 body {
-  background-color: var(--background);
+  width: 100vw;
+  height: 100vh;
   color: var(--primary-text);
+  background-color: var(--background);
+  background-image: radial-gradient(var(--background-point) 4%, transparent 0);
+  background-size: 30px 30px;
+  background-repeat: repeat;
 }
