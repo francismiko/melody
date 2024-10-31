@@ -5,6 +5,7 @@ import { memo, useMemo, type FC } from "react";
 import type { IconType } from "react-icons";
 import { FaGithub, FaMoon, FaSun, FaXTwitter } from "react-icons/fa6";
 import { LuLanguages } from "react-icons/lu";
+import ShineBorder from "./ui/shine-border";
 
 type NavBarItemsType = {
 	[K in "left" | "right" | "middle"]: {
@@ -20,7 +21,7 @@ type InfoBarItemsType = {
 	label?: string;
 }[];
 
-const _duration_ = 0.5;
+const _duration_ = 0.4;
 
 export const DynamicIsland: FC = () => {
 	const { theme, setTheme } = useTheme();
@@ -96,23 +97,29 @@ export const DynamicIsland: FC = () => {
 				ref={hoverRef}
 				className="before:absolute before:-inset-0 hover:before:-inset-4 before:content-['']"
 			>
-				<motion.div
-					initial={false}
-					animate={{
-						width: isHovered ? "40rem" : "10rem",
-						height: isHovered ? "3.2rem" : "2.4rem",
-					}}
-					transition={{ duration: _duration_, ease: "easeInOut" }}
-					className="flex relative overflow-hidden bg-black select-none rounded-full"
+				<ShineBorder
+					className="rounded-full"
+					borderRadius={999}
+					color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
 				>
-					<AnimatePresence>
-						{isHovered ? (
-							<NavBar key="navigation" items={navBarItems} />
-						) : (
-							<InfoBar key="information" items={infoBarItems} />
-						)}
-					</AnimatePresence>
-				</motion.div>
+					<motion.div
+						initial={false}
+						animate={{
+							width: isHovered ? "40rem" : "10rem",
+							height: isHovered ? "3.2rem" : "2.4rem",
+						}}
+						transition={{ duration: _duration_, ease: "easeOut" }}
+						className="flex relative overflow-hidden bg-black select-none rounded-full"
+					>
+						<AnimatePresence>
+							{isHovered ? (
+								<NavBar key="navigation" items={navBarItems} />
+							) : (
+								<InfoBar key="information" items={infoBarItems} />
+							)}
+						</AnimatePresence>
+					</motion.div>
+				</ShineBorder>
 			</div>
 		</div>
 	);
@@ -135,14 +142,14 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 			filter: "blur(20px)",
 		},
 		animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
-		transition: { duration: _duration_, ease: "easeInOut" },
+		transition: { duration: _duration_, ease: "easeOut" },
 	};
 
 	const middleBarAnimation = {
 		initial: isFirstRender ? { opacity: 0, scale: 1, y: -50 } : false,
 		exit: { opacity: 0, scale: 1, y: 50 },
 		animate: { opacity: 1, scale: 1, y: 0 },
-		transition: { duration: _duration_, ease: "easeInOut" },
+		transition: { duration: _duration_, ease: "easeOut" },
 	};
 
 	const LeftBar: FC = memo(() => (
@@ -199,7 +206,7 @@ const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
 			initial={{ opacity: 0, y: -50 }}
 			exit={{ opacity: 0, y: 50 }}
 			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: _duration_, ease: "easeInOut" }}
+			transition={{ duration: _duration_, ease: "easeOut" }}
 			className="flex absolute w-full h-full text-white flex-1 justify-center items-center"
 		>
 			{items.map((item) => (

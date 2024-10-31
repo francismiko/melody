@@ -1,3 +1,5 @@
+@tailwind utilities;
+
 :root {
   --background: #ffffff;
   --primary: #00ffcc;
