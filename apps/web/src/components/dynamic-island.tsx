@@ -7,6 +7,7 @@ import { FaGithub, FaMoon, FaSun, FaXTwitter } from "react-icons/fa6";
 import { LuLanguages } from "react-icons/lu";
 import { MagicCard } from "./ui/magic-card";
 import ShineBorder from "./ui/shine-border";
+import WordRotate from "./ui/word-rotate";
 
 type NavBarItemsType = {
 	[K in "left" | "right" | "middle"]: {
@@ -99,45 +100,41 @@ export const DynamicIsland: FC = () => {
 
 	return (
 		<div className="fixed flex justify-center w-full top-4 z-100">
-			<div
-				ref={hoverRef}
-				className="before:absolute before:-inset-0 hover:before:-inset-4 before:content-['']"
+			<ShineBorder
+				className="rounded-full"
+				borderRadius={999}
+				color={
+					currentTheme === "dark"
+						? ["#A07CFE", "#FE8FB5", "#FFBE7B"]
+						: ["#e0e0e0", "#8f8f8f", "#2b2b2b"]
+				}
 			>
-				<ShineBorder
-					className="rounded-full"
-					borderRadius={999}
-					color={
-						currentTheme === "dark"
-							? ["#A07CFE", "#FE8FB5", "#FFBE7B"]
-							: ["#969696", "#ffffff", "#000000"]
-					}
+				<MagicCard
+					className="bg-black rounded-full"
+					gradientColor={currentTheme === "dark" ? "#8c8c8c" : "#ffffff"}
+					gradientSize={150}
+					gradientOpacity={0.2}
 				>
-					<MagicCard
-						className="bg-black rounded-full"
-						gradientColor={currentTheme === "dark" ? "#8c8c8c" : "#ffffff"}
-						gradientSize={150}
-						gradientOpacity={0.2}
+					<motion.div
+						ref={hoverRef}
+						initial={false}
+						animate={{
+							width: isHovered ? "40rem" : "12rem",
+							height: isHovered ? "3.2rem" : "2.4rem",
+						}}
+						transition={{ duration: _duration_, ease: "easeOut" }}
+						className="relative flex overflow-hidden rounded-full select-none"
 					>
-						<motion.div
-							initial={false}
-							animate={{
-								width: isHovered ? "40rem" : "10rem",
-								height: isHovered ? "3.2rem" : "2.4rem",
-							}}
-							transition={{ duration: _duration_, ease: "easeOut" }}
-							className="relative flex overflow-hidden rounded-full select-none"
-						>
-							<AnimatePresence>
-								{isHovered ? (
-									<NavBar key="navigation" items={navBarItems} />
-								) : (
-									<InfoBar key="information" items={infoBarItems} />
-								)}
-							</AnimatePresence>
-						</motion.div>
-					</MagicCard>
-				</ShineBorder>
-			</div>
+						<AnimatePresence mode="popLayout">
+							{isHovered ? (
+								<NavBar key="navigation" items={navBarItems} />
+							) : (
+								<InfoBar key="information" items={infoBarItems} />
+							)}
+						</AnimatePresence>
+					</motion.div>
+				</MagicCard>
+			</ShineBorder>
 		</div>
 	);
 };
@@ -186,11 +183,13 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 			className="flex flex-row-reverse items-center w-1/4 gap-2 pr-4 text-lg text-white text-nowrap"
 		>
 			{items.right.map((item) => (
-				<span key={item.key} onClick={item.onClick}>
-					<div className="flex items-center justify-center transition duration-300 ease-out rounded-full size-8 hover:bg-neutral-700">
-						{item.icon && <item.icon />}
-					</div>
-				</span>
+				<div
+					key={item.key}
+					onClick={item.onClick}
+					className="flex items-center justify-center transition duration-300 ease-out rounded-full size-8 hover:bg-neutral-700"
+				>
+					{item.icon && <item.icon />}
+				</div>
 			))}
 		</motion.div>
 	));
@@ -220,15 +219,20 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: -50 }}
 			exit={{ opacity: 0, y: 50 }}
-			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: _duration_, ease: "easeOut" }}
 			className="absolute flex items-center justify-center flex-1 w-full h-full text-white"
 		>
-			{items.map((item) => (
-				<span key={item.key}>{item.label}</span>
-			))}
+			<WordRotate
+				words={["Word", "Rotate"]}
+				duration={2000}
+				framerProps={{
+					initial: { opacity: 0, y: -50 },
+					animate: { opacity: 1, y: 0 },
+					exit: { opacity: 0, y: 50 },
+					transition: { duration: _duration_, ease: "easeOut" },
+				}}
+			/>
 		</motion.div>
 	);
 });
