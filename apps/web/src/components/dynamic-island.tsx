@@ -24,7 +24,7 @@ type InfoBarItemsType = {
 const _duration_ = 0.4;
 
 export const DynamicIsland: FC = () => {
-	const { theme, setTheme } = useTheme();
+	const { currentTheme, setTheme } = useTheme();
 	const [hoverRef, isHovered] = useHover();
 
 	const navBarItems: NavBarItemsType = useMemo(
@@ -38,10 +38,15 @@ export const DynamicIsland: FC = () => {
 			right: [
 				{
 					key: "theme",
-					icon: theme === "light" || theme === "system" ? FaMoon : FaSun,
+					icon:
+						currentTheme === "light" || currentTheme === "system"
+							? FaMoon
+							: FaSun,
 					onClick: () => {
 						setTheme(
-							theme === "light" || theme === "system" ? "dark" : "light",
+							currentTheme === "light" || currentTheme === "system"
+								? "dark"
+								: "light",
 						);
 					},
 				},
@@ -83,7 +88,7 @@ export const DynamicIsland: FC = () => {
 				},
 			],
 		}),
-		[theme, setTheme],
+		[currentTheme, setTheme],
 	);
 
 	const infoBarItems: InfoBarItemsType = useMemo(

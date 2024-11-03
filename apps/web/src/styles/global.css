@@ -19,7 +19,4 @@ body {
   height: 100vh;
   color: var(--primary-text);
   background-color: var(--background);
-  /* background-image: radial-gradient(var(--background-point) 4%, transparent 0);
-  background-size: 30px 30px;
-  background-repeat: repeat; */
 }
