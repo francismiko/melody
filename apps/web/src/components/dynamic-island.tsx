@@ -92,7 +92,7 @@ export const DynamicIsland: FC = () => {
 	);
 
 	return (
-		<div className="flex w-full fixed justify-center top-4 z-99999">
+		<div className="fixed flex justify-center w-full top-4 z-99999">
 			<div
 				ref={hoverRef}
 				className="before:absolute before:-inset-0 hover:before:-inset-4 before:content-['']"
@@ -109,7 +109,7 @@ export const DynamicIsland: FC = () => {
 							height: isHovered ? "3.2rem" : "2.4rem",
 						}}
 						transition={{ duration: _duration_, ease: "easeOut" }}
-						className="flex relative overflow-hidden bg-black select-none rounded-full"
+						className="relative flex overflow-hidden bg-black rounded-full select-none"
 					>
 						<AnimatePresence>
 							{isHovered ? (
@@ -133,13 +133,13 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 			? {
 					opacity: 0,
 					scale: 0.4,
-					filter: "blur(20px)",
+					filter: "blur(8px)",
 				}
 			: false,
 		exit: {
 			opacity: 0,
 			scale: 0.4,
-			filter: "blur(20px)",
+			filter: "blur(8px)",
 		},
 		animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
 		transition: { duration: _duration_, ease: "easeOut" },
@@ -155,7 +155,7 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 	const LeftBar: FC = memo(() => (
 		<motion.div
 			{...sideBarAnimation}
-			className="text-white flex w-1/4 flex-row items-center gap-4 pl-4 text-nowrap"
+			className="flex flex-row items-center w-1/4 gap-4 pl-4 text-white text-nowrap"
 		>
 			{items.left.map((item) => (
 				<span key={item.key}>{item.label}</span>
@@ -166,11 +166,11 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 	const RightBar: FC = memo(() => (
 		<motion.div
 			{...sideBarAnimation}
-			className="text-white flex w-1/4 flex-row-reverse items-center gap-2 pr-4 text-lg text-nowrap"
+			className="flex flex-row-reverse items-center w-1/4 gap-2 pr-4 text-lg text-white text-nowrap"
 		>
 			{items.right.map((item) => (
 				<span key={item.key} onClick={item.onClick}>
-					<div className="size-8 flex items-center justify-center rounded-full transition duration-300 ease-out hover:bg-neutral-700">
+					<div className="flex items-center justify-center transition duration-300 ease-out rounded-full size-8 hover:bg-neutral-700">
 						{item.icon && <item.icon />}
 					</div>
 				</span>
@@ -181,7 +181,7 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 	const MiddleBar: FC = memo(() => (
 		<motion.div
 			{...middleBarAnimation}
-			className="text-white absolute flex grow w-full h-full px-1/4 justify-center items-center gap-4 text-nowrap"
+			className="absolute flex items-center justify-center w-full h-full gap-4 text-white grow px-1/4 text-nowrap"
 		>
 			{items.middle.map((item) => (
 				<span key={item.key} className="min-w-8">
@@ -192,7 +192,7 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 	));
 
 	return (
-		<div className="flex absolute w-full h-full place-content-between">
+		<div className="absolute flex w-full h-full place-content-between">
 			<LeftBar />
 			<MiddleBar />
 			<RightBar />
@@ -207,7 +207,7 @@ const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
 			exit={{ opacity: 0, y: 50 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: _duration_, ease: "easeOut" }}
-			className="flex absolute w-full h-full text-white flex-1 justify-center items-center"
+			className="absolute flex items-center justify-center flex-1 w-full h-full text-white"
 		>
 			{items.map((item) => (
 				<span key={item.key}>{item.label}</span>
