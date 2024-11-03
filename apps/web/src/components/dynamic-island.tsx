@@ -1,10 +1,11 @@
-import { useTheme } from "@/providers";
+import { useTheme } from "@/providers/theme";
 import { useHover, useIsFirstRender } from "@uidotdev/usehooks";
 import { AnimatePresence, motion } from "framer-motion";
 import { memo, useMemo, type FC } from "react";
 import type { IconType } from "react-icons";
 import { FaGithub, FaMoon, FaSun, FaXTwitter } from "react-icons/fa6";
 import { LuLanguages } from "react-icons/lu";
+import { MagicCard } from "./ui/magic-card";
 import ShineBorder from "./ui/shine-border";
 
 type NavBarItemsType = {
@@ -97,7 +98,7 @@ export const DynamicIsland: FC = () => {
 	);
 
 	return (
-		<div className="fixed flex justify-center w-full top-4 z-99999">
+		<div className="fixed flex justify-center w-full top-4 z-100">
 			<div
 				ref={hoverRef}
 				className="before:absolute before:-inset-0 hover:before:-inset-4 before:content-['']"
@@ -105,25 +106,36 @@ export const DynamicIsland: FC = () => {
 				<ShineBorder
 					className="rounded-full"
 					borderRadius={999}
-					color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
+					color={
+						currentTheme === "dark"
+							? ["#A07CFE", "#FE8FB5", "#FFBE7B"]
+							: ["#969696", "#ffffff", "#000000"]
+					}
 				>
-					<motion.div
-						initial={false}
-						animate={{
-							width: isHovered ? "40rem" : "10rem",
-							height: isHovered ? "3.2rem" : "2.4rem",
-						}}
-						transition={{ duration: _duration_, ease: "easeOut" }}
-						className="relative flex overflow-hidden bg-black rounded-full select-none"
+					<MagicCard
+						className="bg-black rounded-full"
+						gradientColor={currentTheme === "dark" ? "#8c8c8c" : "#ffffff"}
+						gradientSize={150}
+						gradientOpacity={0.2}
 					>
-						<AnimatePresence>
-							{isHovered ? (
-								<NavBar key="navigation" items={navBarItems} />
-							) : (
-								<InfoBar key="information" items={infoBarItems} />
-							)}
-						</AnimatePresence>
-					</motion.div>
+						<motion.div
+							initial={false}
+							animate={{
+								width: isHovered ? "40rem" : "10rem",
+								height: isHovered ? "3.2rem" : "2.4rem",
+							}}
+							transition={{ duration: _duration_, ease: "easeOut" }}
+							className="relative flex overflow-hidden rounded-full select-none"
+						>
+							<AnimatePresence>
+								{isHovered ? (
+									<NavBar key="navigation" items={navBarItems} />
+								) : (
+									<InfoBar key="information" items={infoBarItems} />
+								)}
+							</AnimatePresence>
+						</motion.div>
+					</MagicCard>
 				</ShineBorder>
 			</div>
 		</div>

@@ -1,6 +1,6 @@
 import { DynamicIsland } from "@/components/dynamic-island";
 import { TanStackRouterDevtools } from "@/components/tanstack-router-devtools";
-import { ThemeProvider } from "@/providers";
+import { ThemeProvider } from "@/providers/theme";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createRootRoute({
