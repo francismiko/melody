@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import {
 	useCallback,
@@ -7,8 +8,6 @@ import {
 	type HTMLAttributes,
 	type MouseEvent,
 } from "react";
-
-import { cn } from "@/lib/utils";
 
 export interface MagicCardProps extends HTMLAttributes<HTMLDivElement> {
 	gradientSize?: number;
@@ -54,7 +53,7 @@ export function MagicCard({
 				className,
 			)}
 		>
-			<div className="relative z-999">{children}</div>
+			<div className="relative">{children}</div>
 			<motion.div
 				className="absolute transition-opacity duration-300 opacity-0 pointer-events-none -inset-px rounded-xl group-hover:opacity-100"
 				style={{
@@ -67,3 +66,5 @@ export function MagicCard({
 		</div>
 	);
 }
+
+export default MagicCard;

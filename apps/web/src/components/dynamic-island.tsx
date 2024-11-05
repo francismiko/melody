@@ -5,9 +5,10 @@ import { memo, useMemo, type FC } from "react";
 import type { IconType } from "react-icons";
 import { FaGithub, FaMoon, FaSun, FaXTwitter } from "react-icons/fa6";
 import { LuLanguages } from "react-icons/lu";
+import { UnderlineLink } from "./atoms/underline-link";
 import { MagicCard } from "./ui/magic-card";
-import ShineBorder from "./ui/shine-border";
-import WordRotate from "./ui/word-rotate";
+import { ShineBorder } from "./ui/shine-border";
+import { WordRotate } from "./ui/word-rotate";
 
 type NavBarItemsType = {
 	[K in "left" | "right" | "middle"]: {
@@ -18,10 +19,7 @@ type NavBarItemsType = {
 	}[];
 };
 
-type InfoBarItemsType = {
-	key: string;
-	label?: string;
-}[];
+type InfoBarItemsType = string[];
 
 const _duration_ = 0.4;
 
@@ -94,7 +92,7 @@ export const DynamicIsland: FC = () => {
 	);
 
 	const infoBarItems: InfoBarItemsType = useMemo(
-		() => [{ key: "info", label: "info" }],
+		() => ["👋 hi, I'm francis", "欢迎来到我的站点"],
 		[],
 	);
 
@@ -119,8 +117,8 @@ export const DynamicIsland: FC = () => {
 						ref={hoverRef}
 						initial={false}
 						animate={{
-							width: isHovered ? "40rem" : "12rem",
-							height: isHovered ? "3.2rem" : "2.4rem",
+							width: isHovered ? "42rem" : "12rem",
+							height: isHovered ? "3.6rem" : "2.4rem",
 						}}
 						transition={{ duration: _duration_, ease: "easeOut" }}
 						className="relative flex overflow-hidden rounded-full select-none"
@@ -200,9 +198,9 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 			className="absolute flex items-center justify-center w-full h-full gap-4 text-white grow px-1/4 text-nowrap"
 		>
 			{items.middle.map((item) => (
-				<span key={item.key} className="min-w-8">
-					{item.label}
-				</span>
+				<UnderlineLink key={item.key}>
+					<span>{item.label}</span>
+				</UnderlineLink>
 			))}
 		</motion.div>
 	));
@@ -224,8 +222,7 @@ const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
 			className="absolute flex items-center justify-center flex-1 w-full h-full text-white"
 		>
 			<WordRotate
-				words={["Word", "Rotate"]}
-				duration={2000}
+				words={items}
 				framerProps={{
 					initial: { opacity: 0, y: -50 },
 					animate: { opacity: 1, y: 0 },
