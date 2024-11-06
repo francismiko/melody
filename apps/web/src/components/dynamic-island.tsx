@@ -117,7 +117,7 @@ export const DynamicIsland: FC = () => {
 				borderRadius={999}
 				color={
 					currentTheme === "dark"
-						? ["#A07CFE", "#FE8FB5", "#FFBE7B"]
+						? ["#6666FF", "#01FFFF", "#66FFCC"]
 						: ["#e0e0e0", "#8f8f8f", "#2b2b2b"]
 				}
 			>
@@ -168,7 +168,7 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 			filter: "blur(8px)",
 		},
 		animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
-		transition: { duration: _duration_, ease: "easeOut" },
+		transition: { duration: _duration_, ease: "easeInOut" },
 	};
 
 	const middleBarAnimation = {
@@ -198,7 +198,7 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 				<div
 					key={item.key}
 					onClick={item.onClick}
-					className="flex items-center justify-center transition duration-300 ease-out rounded-full size-8 hover:bg-neutral-700"
+					className="flex items-center justify-center transition ease-in-out rounded-full duration-250 size-8 hover:bg-neutral-700"
 				>
 					{item.icon && <item.icon />}
 				</div>
