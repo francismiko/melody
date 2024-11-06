@@ -1,4 +1,5 @@
 import { useTheme } from "@/providers/theme";
+import { useNavigate } from "@tanstack/react-router";
 import { useHover, useIsFirstRender } from "@uidotdev/usehooks";
 import { AnimatePresence, motion } from "framer-motion";
 import { memo, useMemo, type FC } from "react";
@@ -10,20 +11,21 @@ import { MagicCard } from "./ui/magic-card";
 import { ShineBorder } from "./ui/shine-border";
 import { WordRotate } from "./ui/word-rotate";
 
-type NavBarItemsType = {
-	[K in "left" | "right" | "middle"]: {
-		key: string;
-		label?: string;
-		icon?: IconType;
-		onClick?: () => void;
-	}[];
+type NavBarItemType = {
+	key: string;
+	label?: string;
+	icon?: IconType;
+	onClick?: () => void;
 };
+
+type NavBarItemsType = Record<"left" | "right" | "middle", NavBarItemType[]>;
 
 type InfoBarItemsType = string[];
 
 const _duration_ = 0.4;
 
 export const DynamicIsland: FC = () => {
+	const navigate = useNavigate();
 	const { currentTheme, setTheme } = useTheme();
 	const [hoverRef, isHovered] = useHover();
 
@@ -73,22 +75,34 @@ export const DynamicIsland: FC = () => {
 				{
 					key: "home",
 					label: "主页",
+					onClick: () => {
+						navigate({ to: "/" });
+					},
 				},
 				{
 					key: "blog",
 					label: "博客",
+					onClick: () => {
+						navigate({ to: "/blog" });
+					},
 				},
 				{
 					key: "project",
 					label: "项目",
+					onClick: () => {
+						navigate({ to: "/project" });
+					},
 				},
 				{
 					key: "sponsor",
 					label: "赞助",
+					onClick: () => {
+						navigate({ to: "/sponsor" });
+					},
 				},
 			],
 		}),
-		[currentTheme, setTheme],
+		[currentTheme, setTheme, navigate],
 	);
 
 	const infoBarItems: InfoBarItemsType = useMemo(
@@ -198,7 +212,7 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 			className="absolute flex items-center justify-center w-full h-full gap-4 text-white grow px-1/4 text-nowrap"
 		>
 			{items.middle.map((item) => (
-				<UnderlineLink key={item.key}>
+				<UnderlineLink key={item.key} onClick={item.onClick}>
 					<span>{item.label}</span>
 				</UnderlineLink>
 			))}

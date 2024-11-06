@@ -15,7 +15,7 @@
         "useKeyWithClickEvents": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "error"
+        "useExhaustiveDependencies": "warn"
       }
     }
   }
