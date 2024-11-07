@@ -3,8 +3,8 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun --hot run main.ts",
-    "build": "bun build src/main.ts --outdir ./"
+    "dev": "bun --hot run index.ts",
+    "build": "bun build src/index.ts --outdir ."
   },
   "devDependencies": {
     "@types/bun": "latest"
