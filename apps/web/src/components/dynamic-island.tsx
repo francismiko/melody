@@ -2,7 +2,7 @@ import { useTheme } from "@/providers/theme";
 import { useNavigate } from "@tanstack/react-router";
 import { useHover, useIsFirstRender } from "@uidotdev/usehooks";
 import { AnimatePresence, motion } from "framer-motion";
-import { memo, useMemo, type FC } from "react";
+import { memo, useEffect, useMemo, useRef, useState, type FC } from "react";
 import type { IconType } from "react-icons";
 import { FaGithub, FaMoon, FaSun, FaXTwitter } from "react-icons/fa6";
 import { LuLanguages } from "react-icons/lu";
@@ -106,12 +106,12 @@ export const DynamicIsland: FC = () => {
 	);
 
 	const infoBarItems: InfoBarItemsType = useMemo(
-		() => ["👋 hi, I'm francis", "欢迎来到我的站点"],
+		() => ["👋 hi, I'm francis", "欢迎来到我的个人站点"],
 		[],
 	);
 
 	return (
-		<div className="fixed flex justify-center w-full top-4 z-100">
+		<div className="fixed flex justify-center w-full top-8 z-100">
 			<ShineBorder
 				className="rounded-full"
 				borderRadius={999}
@@ -131,7 +131,7 @@ export const DynamicIsland: FC = () => {
 						ref={hoverRef}
 						initial={false}
 						animate={{
-							width: isHovered ? "42rem" : "12rem",
+							minWidth: isHovered ? "42rem" : "10rem",
 							height: isHovered ? "3.6rem" : "2.4rem",
 						}}
 						transition={{ duration: _duration_, ease: "easeOut" }}
@@ -172,9 +172,9 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 	};
 
 	const middleBarAnimation = {
-		initial: isFirstRender ? { opacity: 0, scale: 1, y: -50 } : false,
-		exit: { opacity: 0, scale: 1, y: 50 },
+		initial: isFirstRender ? { opacity: 0, scale: 1, y: -40 } : false,
 		animate: { opacity: 1, scale: 1, y: 0 },
+		exit: { opacity: 0, scale: 1, y: 40 },
 		transition: { duration: _duration_, ease: "easeOut" },
 	};
 
@@ -229,20 +229,37 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 });
 
 const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
+	const ref = useRef<HTMLDivElement>(null);
+	const [dynamicWidth, setDynamicWidth] = useState<number>(0);
+
+	useEffect(() => {
+		if (!ref.current) return;
+
+		const resizeObserver = new ResizeObserver((entries) => {
+			setDynamicWidth(entries[0].contentRect.width);
+		});
+		resizeObserver.observe(ref.current);
+		return () => {
+			resizeObserver.disconnect();
+		};
+	}, []);
+
 	return (
 		<motion.div
-			exit={{ opacity: 0, y: 50 }}
+			ref={ref}
+			exit={{ opacity: 0, y: 40 }}
 			transition={{ duration: _duration_, ease: "easeOut" }}
-			className="absolute flex items-center justify-center flex-1 w-full h-full text-white"
+			className="flex items-center justify-center flex-1 h-full px-8 overflow-hidden text-white"
 		>
 			<WordRotate
 				words={items}
 				framerProps={{
-					initial: { opacity: 0, y: -50 },
-					animate: { opacity: 1, y: 0 },
-					exit: { opacity: 0, y: 50 },
+					initial: { opacity: 0, y: -40, width: dynamicWidth },
+					animate: { opacity: 1, y: 0, width: "auto" },
+					exit: { opacity: 0, y: 40, width: dynamicWidth },
 					transition: { duration: _duration_, ease: "easeOut" },
 				}}
+				className="flex justify-center text-nowrap"
 			/>
 		</motion.div>
 	);

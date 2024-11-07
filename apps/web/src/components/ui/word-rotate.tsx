@@ -1,8 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { AnimatePresence, type HTMLMotionProps, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion, type HTMLMotionProps } from "framer-motion";
+import { useEffect, useState, type FC } from "react";
 
 interface WordRotateProps {
 	words: string[];
@@ -11,9 +11,9 @@ interface WordRotateProps {
 	className?: string;
 }
 
-export function WordRotate({
+export const WordRotate: FC<WordRotateProps> = ({
 	words,
-	duration = 4000,
+	duration = 2000,
 	framerProps = {
 		initial: { opacity: 0, y: -50 },
 		animate: { opacity: 1, y: 0 },
@@ -21,7 +21,7 @@ export function WordRotate({
 		transition: { duration: 0.25, ease: "easeInOut" },
 	},
 	className,
-}: WordRotateProps) {
+}) => {
 	const [index, setIndex] = useState(0);
 
 	useEffect(() => {
@@ -43,6 +43,6 @@ export function WordRotate({
 			</motion.span>
 		</AnimatePresence>
 	);
-}
+};
 
 export default WordRotate;
