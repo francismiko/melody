@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun --hot run main.ts",
-    "build": "bun build main.ts --outdir build"
+    "build": "bun build src/main.ts --outdir ./"
   },
   "devDependencies": {
     "@types/bun": "latest"
