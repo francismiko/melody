@@ -117,7 +117,7 @@ export const DynamicIsland: FC = () => {
 				borderRadius={999}
 				color={
 					currentTheme === "dark"
-						? ["#6666FF", "#01FFFF", "#66FFCC"]
+						? ["#9966FF", "#01FFFF", "#66FFCC"]
 						: ["#e0e0e0", "#8f8f8f", "#2b2b2b"]
 				}
 			>
