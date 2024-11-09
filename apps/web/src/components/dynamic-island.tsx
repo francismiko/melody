@@ -118,12 +118,12 @@ export const DynamicIsland: FC = () => {
 				color={
 					currentTheme === "dark"
 						? ["#703ec1", "#ad7cff", "#dbc5ff"]
-						: ["#e0e0e0", "#8f8f8f", "#2b2b2b"]
+						: ["#8f8f8f", "#2b2b2b", "#000000"]
 				}
 			>
 				<MagicCard
 					className="bg-black rounded-full"
-					gradientColor={currentTheme === "dark" ? "#785fa1" : "#785fa1"}
+					gradientColor={currentTheme === "dark" ? "#c8a8ff" : "#e4d3ff"}
 					gradientSize={200}
 					gradientOpacity={0.2}
 				>
