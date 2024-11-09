@@ -22,7 +22,7 @@ type NavBarItemsType = Record<"left" | "right" | "middle", NavBarItemType[]>;
 
 type InfoBarItemsType = string[];
 
-const _duration_ = 0.4;
+const _duration_ = 0.35;
 
 export const DynamicIsland: FC = () => {
 	const navigate = useNavigate();
@@ -117,13 +117,13 @@ export const DynamicIsland: FC = () => {
 				borderRadius={999}
 				color={
 					currentTheme === "dark"
-						? ["#9966FF", "#01FFFF", "#66FFCC"]
+						? ["#703ec1", "#ad7cff", "#dbc5ff"]
 						: ["#e0e0e0", "#8f8f8f", "#2b2b2b"]
 				}
 			>
 				<MagicCard
 					className="bg-black rounded-full"
-					gradientColor={currentTheme === "dark" ? "#8c8c8c" : "#ffffff"}
+					gradientColor={currentTheme === "dark" ? "#005d5d" : "#01FFFF"}
 					gradientSize={150}
 					gradientOpacity={0.2}
 				>
@@ -137,7 +137,7 @@ export const DynamicIsland: FC = () => {
 						transition={{ duration: _duration_, ease: "easeOut" }}
 						className="relative flex overflow-hidden rounded-full select-none"
 					>
-						<AnimatePresence mode="popLayout">
+						<AnimatePresence>
 							{isHovered ? (
 								<NavBar key="navigation" items={navBarItems} />
 							) : (
@@ -249,7 +249,7 @@ const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
 			ref={ref}
 			exit={{ opacity: 0, y: 40 }}
 			transition={{ duration: _duration_, ease: "easeOut" }}
-			className="flex items-center justify-center flex-1 h-full px-8 overflow-hidden text-white"
+			className="flex items-center justify-center flex-1 h-full px-4 text-white"
 		>
 			<WordRotate
 				words={items}

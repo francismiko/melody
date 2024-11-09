@@ -13,7 +13,7 @@ interface WordRotateProps {
 
 export const WordRotate: FC<WordRotateProps> = ({
 	words,
-	duration = 2000,
+	duration = 3000,
 	framerProps = {
 		initial: { opacity: 0, y: -50 },
 		animate: { opacity: 1, y: 0 },
@@ -33,7 +33,7 @@ export const WordRotate: FC<WordRotateProps> = ({
 	}, [words, duration]);
 
 	return (
-		<AnimatePresence mode="popLayout">
+		<AnimatePresence mode="wait">
 			<motion.span
 				key={words[index]}
 				className={cn(className)}
