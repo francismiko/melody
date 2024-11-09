@@ -123,8 +123,8 @@ export const DynamicIsland: FC = () => {
 			>
 				<MagicCard
 					className="bg-black rounded-full"
-					gradientColor={currentTheme === "dark" ? "#005d5d" : "#01FFFF"}
-					gradientSize={150}
+					gradientColor={currentTheme === "dark" ? "#785fa1" : "#785fa1"}
+					gradientSize={200}
 					gradientOpacity={0.2}
 				>
 					<motion.div
@@ -212,8 +212,14 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 			className="absolute flex items-center justify-center w-full h-full gap-4 text-white grow px-1/4 text-nowrap"
 		>
 			{items.middle.map((item) => (
-				<UnderlineLink key={item.key} onClick={item.onClick}>
-					<span>{item.label}</span>
+				<UnderlineLink
+					key={item.key}
+					onClick={item.onClick}
+					underlineColor="#c8a8ff"
+				>
+					<span className="hover:color-[#c8a8ff] transition duration-250 ease-in-out">
+						{item.label}
+					</span>
 				</UnderlineLink>
 			))}
 		</motion.div>
