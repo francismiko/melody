@@ -38,7 +38,7 @@ export const UnderlineLink: FC<UnderlineLinkProps> = memo(
 					}}
 					transition={{ delay: 0.04, duration: 0.25, ease: "easeInOut" }}
 					className={cn(
-						"absolute bottom-0 left-0 right-0 rounded h-[1.5px]",
+						"absolute bottom-0 left-0 right-0 rounded h-[1px]",
 						className,
 					)}
 				/>
