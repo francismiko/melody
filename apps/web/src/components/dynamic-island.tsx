@@ -115,11 +115,11 @@ export const DynamicIsland: FC = () => {
 			<ShineBorder
 				className="rounded-full"
 				borderRadius={999}
-				color={
-					currentTheme === "dark"
+				color={useMemo(() => {
+					return currentTheme === "dark"
 						? ["#703ec1", "#ad7cff", "#dbc5ff"]
-						: ["#8f8f8f", "#2b2b2b", "#000000"]
-				}
+						: ["#8f8f8f", "#2b2b2b", "#000000"];
+				}, [currentTheme])}
 			>
 				<MagicCard
 					className="bg-black rounded-full"
@@ -154,82 +154,95 @@ export const DynamicIsland: FC = () => {
 const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 	const isFirstRender = useIsFirstRender();
 
-	const sideBarAnimation = {
-		initial: isFirstRender
-			? {
-					opacity: 0,
-					scale: 0.4,
-					filter: "blur(8px)",
-				}
-			: false,
-		exit: {
-			opacity: 0,
-			scale: 0.4,
-			filter: "blur(8px)",
-		},
-		animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
-		transition: { duration: _duration_, ease: "easeInOut" },
-	};
+	const sideBarAnimation = useMemo(() => {
+		return {
+			initial: isFirstRender
+				? {
+						opacity: 0,
+						scale: 0.4,
+						filter: "blur(8px)",
+					}
+				: false,
+			exit: {
+				opacity: 0,
+				scale: 0.4,
+				filter: "blur(8px)",
+			},
+			animate: { opacity: 1, scale: 1, filter: "blur(0px)" },
+			transition: { duration: _duration_, ease: "easeInOut" },
+		};
+	}, [isFirstRender]);
 
-	const middleBarAnimation = {
-		initial: isFirstRender ? { opacity: 0, scale: 1, y: -40 } : false,
-		animate: { opacity: 1, scale: 1, y: 0 },
-		exit: { opacity: 0, scale: 1, y: 40 },
-		transition: { duration: _duration_, ease: "easeOut" },
-	};
+	const middleBarAnimation = useMemo(() => {
+		return {
+			initial: isFirstRender ? { opacity: 0, scale: 1, y: -40 } : false,
+			animate: { opacity: 1, scale: 1, y: 0 },
+			exit: { opacity: 0, scale: 1, y: 40 },
+			transition: { duration: _duration_, ease: "easeOut" },
+		};
+	}, [isFirstRender]);
 
-	const LeftBar: FC = memo(() => (
-		<motion.div
-			{...sideBarAnimation}
-			className="flex flex-row items-center w-1/4 gap-4 pl-4 text-white text-nowrap"
-		>
-			{items.left.map((item) => (
-				<span key={item.key}>{item.label}</span>
-			))}
-		</motion.div>
-	));
+	const LeftBar = useMemo(
+		() => (
+			<motion.div
+				{...sideBarAnimation}
+				className="flex flex-row items-center w-1/4 gap-4 pl-4 text-white text-nowrap"
+			>
+				{items.left.map((item) => (
+					<span key={item.key}>{item.label}</span>
+				))}
+			</motion.div>
+		),
+		[items.left],
+	);
 
-	const RightBar: FC = memo(() => (
-		<motion.div
-			{...sideBarAnimation}
-			className="flex flex-row-reverse items-center w-1/4 gap-2 pr-4 text-lg text-white text-nowrap"
-		>
-			{items.right.map((item) => (
-				<div
-					key={item.key}
-					onClick={item.onClick}
-					className="flex items-center justify-center transition ease-in-out rounded-full duration-250 size-8 hover:bg-neutral-700"
-				>
-					{item.icon && <item.icon />}
-				</div>
-			))}
-		</motion.div>
-	));
+	const MiddleBar = useMemo(
+		() => (
+			<motion.div
+				{...middleBarAnimation}
+				className="absolute flex items-center justify-center w-full h-full gap-4 text-white grow px-1/4 text-nowrap"
+			>
+				{items.middle.map((item) => (
+					<UnderlineLink
+						key={item.key}
+						onClick={item.onClick}
+						underlineColor="#c8a8ff"
+					>
+						<span className="hover:color-[#c8a8ff] transition duration-250 ease-in-out">
+							{item.label}
+						</span>
+					</UnderlineLink>
+				))}
+			</motion.div>
+		),
+		[items.middle],
+	);
 
-	const MiddleBar: FC = memo(() => (
-		<motion.div
-			{...middleBarAnimation}
-			className="absolute flex items-center justify-center w-full h-full gap-4 text-white grow px-1/4 text-nowrap"
-		>
-			{items.middle.map((item) => (
-				<UnderlineLink
-					key={item.key}
-					onClick={item.onClick}
-					underlineColor="#c8a8ff"
-				>
-					<span className="hover:color-[#c8a8ff] transition duration-250 ease-in-out">
-						{item.label}
-					</span>
-				</UnderlineLink>
-			))}
-		</motion.div>
-	));
+	const RightBar = useMemo(
+		() => (
+			<motion.div
+				{...sideBarAnimation}
+				className="flex flex-row-reverse items-center w-1/4 gap-2 pr-4 text-lg text-white text-nowrap"
+			>
+				{items.right.map((item) => (
+					<div
+						key={item.key}
+						onClick={item.onClick}
+						className="flex items-center justify-center transition ease-in-out rounded-full duration-250 size-8 hover:bg-neutral-700"
+					>
+						{item.icon && <item.icon />}
+					</div>
+				))}
+			</motion.div>
+		),
+		[items.right],
+	);
 
 	return (
 		<div className="absolute flex w-full h-full place-content-between">
-			<LeftBar />
-			<MiddleBar />
-			<RightBar />
+			{LeftBar}
+			{MiddleBar}
+			{RightBar}
 		</div>
 	);
 });
@@ -237,6 +250,16 @@ const NavBar: FC<{ items: NavBarItemsType }> = memo(({ items }) => {
 const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [dynamicWidth, setDynamicWidth] = useState<number>(0);
+
+	const framerProps = useMemo(
+		() => ({
+			initial: { opacity: 0, y: -40, width: dynamicWidth },
+			animate: { opacity: 1, y: 0, width: "auto" },
+			exit: { opacity: 0, y: 40, width: dynamicWidth },
+			transition: { duration: _duration_, ease: "easeOut" },
+		}),
+		[dynamicWidth],
+	);
 
 	useEffect(() => {
 		if (!ref.current) return;
@@ -259,12 +282,7 @@ const InfoBar: FC<{ items: InfoBarItemsType }> = memo(({ items }) => {
 		>
 			<WordRotate
 				words={items}
-				framerProps={{
-					initial: { opacity: 0, y: -40, width: dynamicWidth },
-					animate: { opacity: 1, y: 0, width: "auto" },
-					exit: { opacity: 0, y: 40, width: dynamicWidth },
-					transition: { duration: _duration_, ease: "easeOut" },
-				}}
+				framerProps={framerProps}
 				className="flex justify-center text-nowrap"
 			/>
 		</motion.div>

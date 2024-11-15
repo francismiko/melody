@@ -1,5 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  corePlugins: {
+    preflight: false,
+  },
 	darkMode: ["class"],
 	content: [
 		"./index.html",

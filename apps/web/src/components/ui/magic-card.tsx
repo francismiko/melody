@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import {
+	memo,
 	useCallback,
 	useEffect,
 	type HTMLAttributes,
@@ -15,7 +16,7 @@ export interface MagicCardProps extends HTMLAttributes<HTMLDivElement> {
 	gradientOpacity?: number;
 }
 
-export function MagicCard({
+export const MagicCard = memo(function MagicCard({
 	children,
 	className,
 	gradientSize = 200,
@@ -58,13 +59,13 @@ export function MagicCard({
 				className="absolute transition-opacity duration-300 opacity-0 pointer-events-none -inset-px rounded-xl group-hover:opacity-100"
 				style={{
 					background: useMotionTemplate`
-            radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent 100%)
-          `,
+						radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px, ${gradientColor}, transparent 100%)
+					`,
 					opacity: gradientOpacity,
 				}}
 			/>
 		</div>
 	);
-}
+});
 
 export default MagicCard;

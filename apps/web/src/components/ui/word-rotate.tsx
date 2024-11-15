@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, type HTMLMotionProps } from "framer-motion";
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useMemo, useState, type FC } from "react";
 
 interface WordRotateProps {
 	words: string[];
@@ -32,16 +32,19 @@ export const WordRotate: FC<WordRotateProps> = ({
 		return () => clearInterval(interval);
 	}, [words, duration]);
 
-	return (
-		<AnimatePresence mode="wait">
-			<motion.span
-				key={words[index]}
-				className={cn(className)}
-				{...framerProps}
-			>
-				{words[index]}
-			</motion.span>
-		</AnimatePresence>
+	return useMemo(
+		() => (
+			<AnimatePresence mode="wait">
+				<motion.span
+					key={words[index]}
+					className={cn(className)}
+					{...framerProps}
+				>
+					{words[index]}
+				</motion.span>
+			</AnimatePresence>
+		),
+		[index, words, className, framerProps],
 	);
 };
 
