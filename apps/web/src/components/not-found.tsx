@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils";
+import { memo } from "react";
 import AnimatedGridPattern from "./ui/animated-grid-pattern";
 import GradualSpacing from "./ui/gradual-spacing";
 
-export const NotFound = () => {
+export const NotFound = memo(() => {
 	return (
 		<div className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden">
 			<GradualSpacing
@@ -20,6 +21,6 @@ export const NotFound = () => {
 			/>
 		</div>
 	);
-};
+});
 
 export default NotFound;

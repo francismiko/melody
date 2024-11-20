@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  corePlugins: {
-    preflight: false,
-  },
+	corePlugins: {
+		preflight: false,
+	},
 	darkMode: ["class"],
 	content: [
 		"./index.html",
@@ -17,13 +17,13 @@ export default {
 			keyframes: {
 				shine: {
 					"0%": {
-						"background-position": "0% 0%",
-					},
-					"50%": {
 						"background-position": "100% 100%",
 					},
-					to: {
+					"50%": {
 						"background-position": "0% 0%",
+					},
+					"100%": {
+						"background-position": "100% 100%",
 					},
 				},
 			},
