@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@million/lint": "^1.0.12",
     "@radix-ui/react-slot": "^1.1.0",
     "@tanstack/react-router": "^1.56.5",
     "@uidotdev/usehooks": "^2.4.1",
@@ -24,6 +23,7 @@
     "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
+    "@million/lint": "^1.0.12",
     "@tanstack/router-cli": "^1.79.0",
     "@tanstack/router-devtools": "^1.56.5",
     "@tanstack/router-plugin": "^1.56.4",
