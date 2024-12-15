@@ -6,9 +6,14 @@ import UnoCSS from "unocss/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-	plugins: [MillionLint.vite({
-        enabled: true
-    }), react(), TanStackRouterVite(), UnoCSS()],
+	plugins: [
+		MillionLint.vite({
+			enabled: false,
+		}),
+		react(),
+		TanStackRouterVite(),
+		UnoCSS(),
+	],
 	resolve: {
 		alias: {
 			"@": path.resolve(__dirname, "./src"),
